@@ -1,6 +1,15 @@
 # Todos project
 Dans le cadre du confinement actuel, il est impossible que vous puissiez mener à bien les projets que vous aviez choisi en début de module. C'est pourquoi je vous ai préparé un projet qui remplacera le vôtre et qui tiendra compte de ce que nous avons pu voir en cours sans vous mettre en diffculté. Cela ne veut pas dire pour autant que vous n'aurez pas à réfléchir je vous rassure...
-
+# Comment l'utiliser ?
+- Clonez le projet puis se positionner dans le répertoire du projet et éxecuter les commandes suivantes :
+```bash
+docker run -p 3306:3306 --name container-mysql1 -e MYSQL_ROOT_PASSWORD=rtlry -d mysql:5
+docker run --name myadmin1 -d --link container-mysql1:db -p 3005:80 phpmyadmin/phpmyadmin
+docker run -it --link container-mysql1:db --rm --name projects.todos -d -v "$PWD":/app -w /app/server -p 3100:3001 node:13 yarn dev
+```
+- Rendez-vous à l'adresse suivante : http://localhost:3005/server_import.php
+- Importez le fichier : `lpdip01.sql`
+- Accédez a l'application à l'adresse suivante :  `http://localhost:3100`
 # Le projet
 Ce projet est fonctionnellement assez simple, il s'agit d'une application de gestion de tâches à faire (todos). Il a la particularité de pouvoir gérer plusieurs listes ayant chacune sons propre ensemble de tâches.
 
